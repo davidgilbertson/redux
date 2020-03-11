@@ -1,10 +1,14 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { collect } from 'react-recollect'
+import { StorePropType } from '../StorePropType'
 
-const Link = ({ active, children, onClick }) => (
+const Link = ({ filter, children, store }) => (
     <button
-       onClick={onClick}
-       disabled={active}
+       onClick={() => {
+         store.visibilityFilter = filter
+       }}
+       disabled={filter === store.visibilityFilter}
        style={{
            marginLeft: '4px',
        }}
@@ -14,9 +18,9 @@ const Link = ({ active, children, onClick }) => (
 )
 
 Link.propTypes = {
-  active: PropTypes.bool.isRequired,
   children: PropTypes.node.isRequired,
-  onClick: PropTypes.func.isRequired
+  filter: PropTypes.string.isRequired,
+  store: StorePropType
 }
 
-export default Link
+export default collect(Link)

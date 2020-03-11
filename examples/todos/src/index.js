@@ -1,15 +1,15 @@
 import React from 'react'
 import { render } from 'react-dom'
-import { createStore } from 'redux'
-import { Provider } from 'react-redux'
+import { initStore } from 'react-recollect'
 import App from './components/App'
-import rootReducer from './reducers'
+import { VisibilityFilters } from './constants'
 
-const store = createStore(rootReducer)
+initStore({
+  todos: [],
+  visibilityFilter: VisibilityFilters.SHOW_ALL
+})
 
 render(
-  <Provider store={store}>
-    <App />
-  </Provider>,
+  <App />,
   document.getElementById('root')
 )

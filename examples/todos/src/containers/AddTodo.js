@@ -1,8 +1,10 @@
 import React from 'react'
-import { connect } from 'react-redux'
-import { addTodo } from '../actions'
+import { collect } from 'react-recollect'
+import { StorePropType } from '../StorePropType'
 
-const AddTodo = ({ dispatch }) => {
+let nextTodoId = 0
+
+const AddTodo = ({ store }) => {
   let input
 
   return (
@@ -12,7 +14,11 @@ const AddTodo = ({ dispatch }) => {
         if (!input.value.trim()) {
           return
         }
-        dispatch(addTodo(input.value))
+        store.todos.push({
+          id: nextTodoId++,
+          text: input.value,
+          completed: false,
+        })
         input.value = ''
       }}>
         <input ref={node => input = node} />
@@ -24,4 +30,8 @@ const AddTodo = ({ dispatch }) => {
   )
 }
 
-export default connect()(AddTodo)
+AddTodo.propTypes = {
+  store: StorePropType,
+}
+
+export default collect(AddTodo)
